@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Js  | Hello</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.js"></script>
+    <style>
+        #app{ width: 350px; height: 500px; background-color: #4c858b; color: #ffffff; font-family: "Anonymice Powerline"; font-size: 16px;}
+        .input-box{ margin-left: 70px; margin-top: 30px; } .todo-empty{ padding: 10px; text-align: center}.cross{ color: floralwhite; text-decoration: none;}
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <input v-model="newTodo" placeholder="Type your todo here..." autofocus class="input-box">
+        <button v-on:click="addTodo"><strong>+</strong></button>
+        <div v-if="todos.length">
+            <ul>
+                <li v-for="todo in todos">
+                    {{ todo }}
+                    <a href="javascript:;" v-on:click="removeTodo($index)" class="cross"><strong>x</strong></a>
+                </li>
+            </ul>
+        </div>
+        <div v-else class="todo-empty">
+            Your todo is hungry!!
+        </div>
+    </div>
+
+    <script>
+
+        new Vue({
+            el: "#app",
+            data: {
+                newTodo : '',
+                todos: [
+                        'This is a simple todo application',
+                        'You can add/remove todo :D',
+                        'Awesome naa??! :p'
+                ]
+            },
+            methods:{
+                addTodo : function () {
+                    if(this.newTodo)
+                        this.todos.push((this.newTodo).trim())
+                    this.newTodo = '';
+                },
+
+                removeTodo: function(index){
+                    this.todos.splice(index, 1)
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
