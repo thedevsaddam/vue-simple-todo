@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Js  | Simple task</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.js"></script>
+    <style>
+        #app{ width: 350px; height: 500px; background-color: #7aac92; color: #ffffff; font-family: "Anonymice Powerline"; font-size: 16px;}
+        .input-box{ margin-left: 70px; margin-top: 30px; } .todo-empty{ padding: 10px; text-align: center}.completed{ text-decoration: line-through; font-style: italic;} #app li { cursor: pointer; }
+    </style>
+
+</head>
+<body>
+
+<div id="app">
+    <input v-model="newTask.text" placeholder="Type your task here..." autofocus class="input-box">
+    <button v-on:click="addTask"><strong>+</strong></button>
+
+    <tasks :list="tasks"></tasks>
+</div>
+
+<template id="task-template">
+    <ul>
+        <li :class="{ 'completed' : task.completed }"
+            v-for="task in list"
+            @click="task.completed = !task.completed"
+        >
+            {{ task.text }}
+        </li>
+    </ul>
+</template>
+
+<script>
+    Vue.component('tasks', {
+        props: ['list'],
+
+        template: '#task-template'
+    });
+    new Vue({
+        el: "#app",
+        data: {
+            newTask: {text: '', completed: false},
+            tasks: [
+                {text: 'Go to the store', completed: true},
+                {text: 'Buy some food', completed: true},
+                {text: 'Meet the doctor', completed: false}
+            ]
+        },
+        methods: {
+            addTask: function () {
+                if(this.newTask.text){
+                    this.tasks.unshift({text: this.newTask.text, completed: false});
+                }
+                this.newTask.text = '';
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
